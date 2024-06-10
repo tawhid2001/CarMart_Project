@@ -1,10 +1,27 @@
 {% extends "base.html" %} {% block content %}
 
+<div class="d-flex flex-wrap flex-column align-items-center m-5 justify-content-around">
+  <div><a class="btn btn-secondary m-3 p-2" href="{% url 'edit_profile' %}">Edit Page</a></div>
+</div>
 
 <h1 class="text-center">Profile Page</h1>
 
-
-<div class="d-flex flex-wrap flex-column align-items-center m-5 justify-content-around">
-  <div><a class="btn btn-primary m-3 p-2" href="{% url 'edit_profile' %}">Edit Page</a></div>
+<h2 class="text-center">Order History</h2>
+<div class="container">
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{{ order.car.image.url }}" alt="{{ order.car.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ order.car.name }}</h5>
+                    <p class="card-text">Quantity: {{ order.quantity }}</p>
+                    <p class="card-text">Ordered At: {{ order.ordered_at|date:"F j, Y, g:i a" }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+
 {% endblock %}

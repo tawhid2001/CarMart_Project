@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from cars.models import Order
+
 # Create your views here.
 
 def signup(request):
@@ -13,7 +15,7 @@ def signup(request):
             signup_form = SignupForm(request.POST)
             if signup_form.is_valid():
                 signup_form.save()
-                return redirect('signup')
+                return redirect('login')
         
         else:
             signup_form = SignupForm()
@@ -38,7 +40,8 @@ class UserLoginView(LoginView):
     
 @login_required
 def profile(request):
-    return render(request,'profile.html')
+    orders = Order.objects.filter(user=request.user)
+    return render(request,'profile.html',{'orders':orders})
 
 @login_required
 def editProfile(request):

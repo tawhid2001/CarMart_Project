@@ -7,10 +7,40 @@
 <div class="d-flex flex-wrap justify-content-evenly align-items-center pt-3">
   <div>
     <h1>Car Mart</h1>
-    <h3>The best, comfortable and economic cars we provid</h3>
+    <h3>The best, comfortable and economic cars we provide</h3>
 </div>
   <div><img src= "{% static 'header.jpeg' %}" /></div>
 </div>
-
+<hr>
+<div>
+  <p class="h4 text-center m-3 p-3">Brands</p>
+  <div class="d-flex justify-content-around">
+    {% for brand in brands %}
+      <div class="card" style="width: 18rem;">
+        <div class="card-body text-center">
+        <a class="text-decoration-none text-dark" href="{% url 'brand_wise' brand.slug %}"><b>{{brand.brand_name}}</b></a> 
+        </div>
+      </div>
+  {% endfor %}
+  </div>
+</div>
+<hr>
+<h4 class="text-center">{{data | length}} results found</h4>
+    <div class="d-flex flex-wrap px-2">
+      {% for car in data%}
+      <div class="col-sm-3">
+        <div class="card m-4">
+          <div class="card-body">
+            <img class="card-img-top" src="{{car.image.url}}" alt="Card image cap">
+            <h5 class="card-title"><a href = "{% url 'details' id=car.id %}" class="text-decoration-none text-dark">{{car.name}}</a></h5>
+            <p class="card-text">{{car.description}}</p>
+            <p>
+              Brand Name: {{car.brand.brand_name}}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
 
 {% endblock content %}
